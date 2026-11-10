@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mama's 44th Birthday</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,500&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--or:#ff8a1f;--pk:#ff7eb6;--cr:#fff6ea;--gd:#e9b44c;--ink:#4a2a14}
+*{box-sizing:border-box}
+body{margin:0;font-family:Nunito,Georgia,sans-serif;color:var(--ink);background:var(--cr);overflow-x:hidden}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;margin:0}
+.screen{display:none;min-height:100vh}.screen.on{display:block}
+section{max-width:860px;margin:0 auto;padding:56px 20px;text-align:center}
+h2{font-size:2rem;margin-bottom:8px}
+.btn{background:linear-gradient(135deg,var(--or),var(--pk));color:#fff;border:0;border-radius:40px;padding:14px 30px;font:700 1.05rem Nunito,sans-serif;cursor:pointer;box-shadow:0 6px 18px #ff8a1f55;transition:transform .2s}
+.btn:hover{transform:scale(1.06)}.btn:disabled{background:#ccc;box-shadow:none;cursor:not-allowed;transform:none}
+#cv{position:fixed;inset:0;pointer-events:none;z-index:99}
+/* hero */
+.hero{background:linear-gradient(160deg,#ffe3c2,#ffd0e2);padding-top:90px;padding-bottom:90px}
+.hero h1{font-size:clamp(2.2rem,7vw,4.4rem);line-height:1.1;color:#c2570a}
+.hero p{font-size:1.2rem;margin:18px 0 30px}
+/* flowers */
+.fl{position:fixed;bottom:-60px;font-size:2.3rem;cursor:pointer;z-index:50;animation:rise linear forwards;user-select:none}
+@keyframes rise{to{transform:translateY(-115vh) rotate(40deg)}}
+body:not(.home) .fl{display:none}
+.hb{position:fixed;z-index:100;font:600 1.4rem Fraunces,serif;color:#c2570a;pointer-events:none;animation:hb 1.2s forwards;white-space:nowrap}
+@keyframes hb{to{transform:translateY(-70px);opacity:0}}
+/* envelope */
+.env{position:relative;width:min(320px,86vw);height:210px;margin:90px auto 30px;background:#ffb0cf;border-radius:6px;cursor:pointer;box-shadow:0 12px 30px #0002;animation:bob 2.4s ease-in-out infinite}
+.env.open{animation:none}
+@keyframes bob{50%{transform:translateY(-10px) rotate(-1.5deg)}}
+.env .flap{position:absolute;inset:0 0 auto 0;height:110px;background:#ff8fbd;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;z-index:3;transition:transform .7s,z-index 0s .35s}
+.env.open .flap{transform:rotateX(180deg);z-index:0;background:#ffc2da}
+.env .front{position:absolute;inset:0;background:#ff9cc6;border-radius:6px;clip-path:polygon(0 0,50% 58%,100% 0,100% 100%,0 100%);z-index:2}
+.env .paper{position:absolute;left:8%;right:8%;top:8px;height:90%;background:#fff;border-radius:4px;z-index:1;transition:transform 1s .5s;display:grid;place-items:center;font-size:2.4rem}
+.env.open .paper{transform:translateY(-105px)}
+.seal{position:absolute;left:50%;top:92px;translate:-50% 0;z-index:4;font-size:2rem;transition:opacity .3s}
+.env.open .seal{opacity:0}
+.letter{max-width:560px;margin:0 auto;background:#fff;border:2px solid var(--gd);border-radius:14px;padding:26px;text-align:left;line-height:1.7;max-height:0;opacity:0;overflow:hidden;padding-block:0;transition:all 1s .9s}
+.letter.show{max-height:700px;opacity:1;padding-block:26px;margin-top:70px}
+/* gallery */
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px;margin-top:24px}
+.gal figure{margin:0;background:#fff;padding:10px 10px 14px;border-radius:6px;box-shadow:0 8px 20px #0002;transition:transform .3s}
+.gal figure:nth-child(odd){transform:rotate(-2deg)}.gal figure:nth-child(even){transform:rotate(2deg)}
+.gal figure:hover{transform:scale(1.07) rotate(0);z-index:2}
+.gal img{width:100%;height:220px;object-fit:cover;border-radius:3px;background:#ffe3c2}
+.gal figcaption{font:italic 500 1rem Fraunces,serif;margin-top:8px}
+/* challenges */
+.chal{background:#fff;border:2px solid var(--gd);border-radius:18px;max-width:520px;margin:20px auto;padding:10px 24px;text-align:left}
+.chal li{list-style:none;padding:10px 0;font-weight:700;border-bottom:1px dashed #f0d9b8}
+.chal li:last-child{border:0}.chal li.ok{color:#1c9a4b}.chal li.ok::before{content:"✅ "}
+.chal li:not(.ok)::before{content:"⬜ "}
+/* quiz */
+.qz{background:#fff;border-radius:18px;padding:26px;max-width:560px;margin:20px auto;box-shadow:0 8px 24px #0001}
+.qz button.o{display:block;width:100%;margin:8px 0;padding:12px;border:2px solid #ffd0a0;background:var(--cr);border-radius:12px;font:700 1rem Nunito,sans-serif;cursor:pointer}
+.qz button.o:hover{background:#ffe8cf}.qz .good{background:#c9f2d4!important;border-color:#1c9a4b!important}.qz .bad{background:#ffd0d0!important;border-color:#d33!important}
+#cake{font-size:6rem;background:none;border:0;cursor:pointer;line-height:1.1;transition:transform .15s,font-size .25s}
+#mute{position:fixed;right:16px;bottom:16px;z-index:120;width:52px;height:52px;border-radius:50%;border:2px solid var(--gd);background:#fff;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 14px #0003}#cake:active{transform:scale(.88)}
+.can{font-size:2rem;min-height:2.6rem}
+/* reasons */
+#reasons{background:linear-gradient(160deg,#c2570a,#ff5d9e);color:#fff}
+.hearts{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:10px;margin:24px 0}
+.hearts button{font-size:1.9rem;background:#ffffff22;border:0;border-radius:14px;padding:6px;cursor:pointer;transition:transform .2s}
+.hearts button:hover{transform:scale(1.2)}.hearts button.seen{background:#ffffff55}
+#rbox{min-height:110px;background:#fff;color:var(--ink);border-radius:18px;padding:22px;font:600 1.4rem Fraunces,serif;display:grid;place-items:center}
+/* final */
+#final{background:radial-gradient(circle at 50% 30%,#ffe9a8,#ff9a3c 55%,#e0407f);color:#fff;text-align:center}
+#final section{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh}
+#final h1{font-size:clamp(2.4rem,8vw,5rem);text-shadow:0 4px 18px #0004}
+#final .q{font:italic 500 clamp(1.2rem,3.4vw,1.9rem)/1.5 Fraunces,serif;max-width:700px;margin:26px 0}
+@media (prefers-reduced-motion:reduce){.env,.fl{animation:none}}
+</style>
+</head>
+<body class="home">
+<canvas id="cv"></canvas>
+<audio id="song" src="Song.mp3" loop preload="auto"></audio>
+<button id="mute" onclick="toggleSound()" aria-label="Turn sound on or off">🔊</button>
+
+<!-- ============ HOME ============ -->
+<div class="screen on" id="home">
+  <div class="hero"><section>
+    <h1>Happy 44th Birthday, Mama Chris ❤️</h1>
+    <p>44 years of being amazing. A lifetime of making our lives better.</p>
+    <button class="btn" onclick="go('env')">Open your present 🎁</button>
+  </section></div>
+
+  <section id="env">
+    <h2>A letter just for you</h2>
+    <p>Tap the envelope 💌</p>
+    <div class="env" id="envelope" onclick="openEnv()">
+      <div class="flap"></div><div class="paper">💛</div><div class="front"></div><div class="seal">💗</div>
+    </div>
+    <div class="letter" id="letter">
+      <h3>Dear Mama Chris,</h3>
+      <p>Happy 44th birthday! Today is all about you. Thank you for every meal, every hug, every late night and every time you put us first.</p>
+      <p>We made this little adventure so you can sit back, smile and feel how loved you are. Pop the flowers, find the hearts, beat the challenges and there's a surprise waiting at the end.</p>
+      <p>Love always,<br><b>Jonah, Caleb &amp; Layla</b> ❤️</p>
+    </div>
+  </section>
+
+  <section id="photos" style="background:#fff0e0;max-width:none">
+    <h2>Our memories 📸</h2>
+    <div class="gal" id="gal" style="max-width:860px;margin-inline:auto"></div>
+  </section>
+
+  <section>
+    <h2>Your 5 birthday challenges 🎯</h2>
+    <p>Finish all five to unlock your final surprise.</p>
+    <ul class="chal" id="chal" style="padding-inline:24px">
+      <li>Open the envelope and read our letter</li>
+      <li>Pop 5 floating flowers 🌸 (they're drifting up the screen!)</li>
+      <li>Find 10 reasons we love you ❤️</li>
+      <li>Score 6 or more on the family quiz</li>
+      <li>Light the cake: tap it 10 times</li>
+    </ul>
+  </section>
+
+  <section style="padding-top:0">
+    <h2>❤️ 44 Reasons We Love You</h2>
+    <p>Step into a whole new page of reasons.</p>
+    <button class="btn" onclick="show('reasons')">Take me there 💖</button>
+  </section>
+
+  <section style="background:#fff0e0;max-width:none">
+    <h2>🎮 The Family Quiz</h2>
+    <div class="qz" id="quiz"></div>
+  </section>
+
+  <section>
+    <h2>🎂 Light the candles</h2>
+    <p>Tap the cake!</p>
+    <button id="cake" onclick="cake()" aria-label="Tap the cake">🎂</button>
+    <div class="can" id="can"></div>
+  </section>
+
+  <section style="background:linear-gradient(160deg,#ffe3c2,#ffd0e2);max-width:none">
+    <h2>🎁 Your final surprise</h2>
+    <p id="lockmsg">Finish all 5 challenges to unlock it.</p>
+    <button class="btn" id="unlock" disabled onclick="finale()">Open the final surprise 🎁</button>
+  </section>
+</div>
+
+<!-- ============ REASONS ============ -->
+<div class="screen" id="reasons"><section>
+  <h1 style="font-size:2.6rem">44 Reasons We Love You, Mama 💖</h1>
+  <p>Tap a heart. <b id="rc">0</b>/44 found.</p>
+  <div id="rbox">Pick a heart to start 👇</div>
+  <div class="hearts" id="hearts"></div>
+  <button class="btn" style="background:#fff;color:#c2570a" onclick="show('home')">⬅ Back to the party</button>
+</section></div>
+
+<!-- ============ FINAL ============ -->
+<div class="screen" id="final"><section>
+  <h1>Happy 44th Birthday, Mama Chris! 🧡</h1>
+  <p class="q">“May today bring you all the happiness, rest, and love that you have so selflessly given to us.”</p>
+  <p class="q" style="font-size:1.3rem">No matter how old we get, you'll always be our favourite person. We love you, Mama.</p>
+  <h2>Love always,<br>Jonah, Caleb &amp; Layla ❤️</h2>
+  <button class="btn" style="margin-top:30px;background:#fff;color:#c2570a" onclick="show('home')">Back to the start</button>
+</section></div>
+
+<script>
+const $=s=>document.querySelector(s);
+/* ---------- sound ---------- */
+const song=$('#song');let muted=false,AC;song.volume=.5;
+function startMusic(){if(!muted)song.play().catch(()=>{})}
+addEventListener('pointerdown',startMusic,{once:true});
+function toggleSound(){muted=!muted;song.muted=muted;$('#mute').textContent=muted?'🔇':'🔊';if(!muted)song.play().catch(()=>{})}
+function tone(f,t=0,d=.18,type='sine',v=.18){if(muted)return;AC=AC||new (window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain(),s=AC.currentTime+t;o.type=type;o.frequency.value=f;g.gain.setValueAtTime(v,s);g.gain.exponentialRampToValueAtTime(.001,s+d);o.connect(g).connect(AC.destination);o.start(s);o.stop(s+d)}
+const sfx={
+ flower:()=>[660,880,1100].forEach((f,i)=>tone(f,i*.07,.2,'triangle')),
+ env:()=>[392,523,659,784,1047].forEach((f,i)=>tone(f,i*.12,.4)),
+ heart:()=>{tone(784,0,.15);tone(1175,.09,.25)},
+ good:()=>[523,659,784,1047].forEach((f,i)=>tone(f,i*.09,.25,'square',.08)),
+ bad:()=>tone(180,0,.35,'sawtooth',.08),
+ cake:n=>tone(330*Math.pow(1.12,n),0,.25,'triangle')
+};
+/* ---------- screens ---------- */
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));$('#'+id).classList.add('on');document.body.classList.toggle('home',id==='home');scrollTo(0,0)}
+function go(id){$('#'+id).scrollIntoView({behavior:'smooth'})}
+/* ---------- confetti ---------- */
+const cv=$('#cv'),cx=cv.getContext('2d');let P=[];
+function fit(){cv.width=innerWidth;cv.height=innerHeight}fit();onresize=fit;
+function boom(x,y,n=45){const c=['#ff8a1f','#ff7eb6','#e9b44c','#ffffff','#c2570a'];for(let i=0;i<n;i++)P.push({x,y,vx:(Math.random()-.5)*12,vy:Math.random()*-10-2,r:Math.random()*5+4,c:c[i%5],l:100})}
+(function loop(){cx.clearRect(0,0,cv.width,cv.height);P=P.filter(p=>p.l>0);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.3;p.l--;cx.globalAlpha=Math.min(1,p.l/30);cx.fillStyle=p.c;cx.fillRect(p.x,p.y,p.r,p.r*1.6)});requestAnimationFrame(loop)})();
+/* ---------- challenges ---------- */
+const done=new Set();
+function complete(n){if(done.has(n))return;done.add(n);$('#chal').children[n-1].classList.add('ok');boom(innerWidth/2,innerHeight/2,70);
+ if(done.size===5){$('#unlock').disabled=false;$('#lockmsg').textContent='All 5 challenges complete! 🎉';}}
+/* ---------- envelope ---------- */
+function openEnv(){const e=$('#envelope');if(e.classList.contains('open'))return;e.classList.add('open');sfx.env();$('#letter').classList.add('show');boom(innerWidth/2,innerHeight/2);setTimeout(()=>complete(1),1800)}
+/* ---------- gallery ---------- */
+const caps=['China Trip','Photo in front of Mao Zi Dong','Eating Uni!!','Ha Long Bay Cruise','Photos in Macau','Photos in Macau'];
+for(let i=1;i<=6;i++){const f=document.createElement('figure'),im=new Image();im.alt=caps[i-1];im.src=`Photos/photo${i}.jpg`;
+ im.onerror=()=>{im.onerror=()=>{im.alt='photo'+i+' not found'};im.src=`Photos/photo${i}.jpeg`};
+ f.append(im);f.insertAdjacentHTML('beforeend',`<figcaption>${caps[i-1]}</figcaption>`);$('#gal').append(f)}
+/* ---------- floating flowers ---------- */
+let popped=0;
+function flower(){if(!document.body.classList.contains('home'))return;const f=document.createElement('div');f.className='fl';f.textContent=['🌸','🌼','🌷','🌺','🧡'][Math.random()*5|0];f.style.left=Math.random()*90+'vw';f.style.animationDuration=(8+Math.random()*6)+'s';
+ f.onclick=e=>{sfx.flower();boom(e.clientX,e.clientY);const h=document.createElement('div');h.className='hb';h.textContent='Happy Birthday! 🎉';h.style.left=Math.max(8,e.clientX-90)+'px';h.style.top=e.clientY+'px';document.body.append(h);setTimeout(()=>h.remove(),1200);f.remove();if(++popped>=5)complete(2)};
+ f.onanimationend=()=>f.remove();document.body.append(f)}
+setInterval(flower,1300);
+/* ---------- 44 reasons (edit these any time!) ---------- */
+const R="You always look after us|You make our house feel like home|You make us laugh|You always support us|You give the best hugs|You never give up on us|You cook the best food|You listen when we need it|You're the strongest person we know|You believe in us|You make every birthday special|You forgive us (usually!)|You work so hard for us|You know exactly what to say|You make us feel safe|You're beautiful inside and out|You teach us to be kind|You're always there|You celebrate our wins|You pick us up when we fall|You make ordinary days fun|You put us first|You have the warmest smile|You're our biggest fan|You taught us right from wrong|You never miss the little things|You make us want to be better|You're patient with us|You're generous|You light up every room|You remember everything|You give the best advice|You're our hero|You make us feel loved|You're fun to be around|You're brave|You stayed up with us|You always have time for us|You make us feel proud|You're the heart of our family|You're our first call|You make us feel at home anywhere|You're simply the best|You're our Mama, and we love you".split('|');
+let seen=new Set();
+R.forEach((t,i)=>{const b=document.createElement('button');b.textContent='❤️';b.setAttribute('aria-label','Reason '+(i+1));
+ b.onclick=()=>{sfx.heart();$('#rbox').textContent=`${i+1}. ${t}`;b.classList.add('seen');b.textContent='💖';seen.add(i);$('#rc').textContent=seen.size;const r=b.getBoundingClientRect();boom(r.x+r.width/2,r.y,18);if(seen.size>=10)complete(3);if(seen.size===44)boom(innerWidth/2,innerHeight/2,200)};
+ $('#hearts').append(b)});
+/* ---------- quiz (edit questions: [question, [options], correctIndex]) ---------- */
+const Q=[
+["What is Mama's name?",["Mrs Macau","Josephine","Eve","Chris"],3],
+["What is Mama's favourite colour?",["Blue","Green","Orange","Purple"],2],
+["How old is Mama turning today?",["40","42","44","46"],2],
+["How many children does Mama have?",["649","3","4","5"],1],
+["What song does Mama sing to us at night?",["Sweet Caroline","Ai Ge","Layla","Way Maker"],1],
+["Which of these is NOT one of Mama's kids?",["Jonah","Caleb","Layla","Faheem"],3],
+["Who are Jonah's younger siblings?",["Caleb & Layla","Sam & Alex","Mia & Leo","He has none"],0],
+["Who is the best Mama in the whole world?",["Spider Man","Bob the Builder","Mama Chris","All are the same"],2]];
+let qi=0,sc=0;
+function ask(){const q=Q[qi],z=$('#quiz');
+ z.innerHTML=`<p>Question ${qi+1} of ${Q.length}</p><h3>${q[0]}</h3>`;
+ q[1].forEach((o,i)=>{const b=document.createElement('button');b.className='o';b.textContent=o;b.onclick=()=>pick(b,i);z.append(b)})}
+function pick(b,i){const q=Q[qi],bs=document.querySelectorAll('#quiz .o');bs.forEach(x=>x.disabled=true);
+ if(i===q[2]){b.classList.add('good');sfx.good();sc++;boom(innerWidth/2,innerHeight/2,25)}else{b.classList.add('bad');sfx.bad();bs[q[2]].classList.add('good')}
+ setTimeout(()=>{qi++;qi<Q.length?ask():end()},1100)}
+function end(){const ok=sc>=6;$('#quiz').innerHTML=`<h3>You scored ${sc}/${Q.length}!</h3><p>${ok?'Amazing, challenge complete! 🎉':'So close! You need 6 to pass. Try again.'}</p><button class="btn" onclick="qi=0;sc=0;ask()">Play again</button>`;if(ok)complete(4)}
+ask();
+/* ---------- cake ---------- */
+let taps=0;
+function cake(){if(taps<10)taps++;const c=$('#can'),k=$('#cake');c.textContent='🕯️'.repeat(taps)+` ${taps}/10`;k.style.fontSize=(6+taps*.55)+'rem';sfx.cake(taps);const r=k.getBoundingClientRect();boom(r.x+r.width/2,r.y+20,taps<10?12:60);if(taps===10)complete(5)}
+/* ---------- final ---------- */
+/* ---------- cheering (plays Cheer.mp3) ---------- */
+const cheerFile=new Audio('Cheer.mp3');cheerFile.volume=1;
+function cheer(){if(muted)return;song.volume=.15;setTimeout(()=>song.volume=.5,6000);cheerFile.currentTime=0;cheerFile.play().catch(()=>{})}
+function finale(){show('final');cheer();let n=0;const t=setInterval(()=>{boom(Math.random()*innerWidth,innerHeight*.5,60);if(++n>12)clearInterval(t)},450)}
+</script>
+</body>
+</html>
